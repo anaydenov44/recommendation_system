@@ -1,0 +1,4 @@
+172.21.0.1 - - [05/Jun/2025:11:45:46 +0000] "GET / HTTP/1.1" 200 2477 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0" "-"
+172.21.0.1 - - [05/Jun/2025:11:45:58 +0000] "GET / HTTP/1.1" 200 2477 "-" "Mozilla/5.0 (X11; Linux x86_64; rv:137.0) Gecko/20100101 Firefox/137.0" "-"
+{ "@timestamp": "2025-06-05T11:53:13+00:00", "remote_addr": "172.21.0.1", "request": "GET / HTTP/1.1", "status": 500 }
+{ "@timestamp": "2025-06-05T11:53:40+00:00", "remote_addr": "172.21.0.1", "request": "GET / HTTP/1.1", "status": 200 }

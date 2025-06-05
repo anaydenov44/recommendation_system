@@ -1,0 +1,13 @@
+[DEFAULT]
+bantime  = 300
+findtime = 60
+maxretry = 50
+
+[nginx]
+enabled = true
+filter = nginx
+action = iptables-multiport
+logpath = /var/log/nginx/access.log
+maxretry = 50
+findtime = 60
+bantime = 300

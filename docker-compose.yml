@@ -1,0 +1,52 @@
+version: '3'
+services:
+  proxy:
+    build:
+      context: ./nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx-proxy/logs:/var/log/nginx
+    networks:
+      - secure-network
+
+  recommendation_system:
+    build:
+      context: ./test-recomendation-system
+    networks:
+      - secure-network
+    restart: unless-stopped
+
+  db:
+    image: mysql:latest
+    environment:
+      - MYSQL_ROOT_PASSWORD=admin
+      - MYSQL_DATABASE=recommendation_db
+      - MYSQL_USER=admin
+      - MYSQL_PASSWORD=admin
+    ports:
+      - "33061:3306"
+    volumes:
+      - ./mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - secure-network
+
+  fail2ban:
+    image: crazymax/fail2ban:latest
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./nginx-proxy/logs:/var/log/nginx
+      - ./fail2ban/filter.d:/etc/fail2ban/filter.d
+      - ./fail2ban/jail.local:/etc/fail2ban/jail.local
+    environment:
+      - TZ=Europe/Moscow
+      - F2B_LOG_LEVEL=INFO
+    networks:
+      - secure-network
+    restart: unless-stopped
+
+networks:
+  secure-network:
+    driver: bridge
+    enable_ipv6: false
